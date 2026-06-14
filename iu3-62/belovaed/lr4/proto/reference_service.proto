@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package pharmacy.reference;
+
+option java_package = "pharmacy.proto";
+option java_multiple_files = true;
+
+service ReferenceService {
+  //вызовы из Core
+
+  rpc CheckMedicineExists (MedicineIdRequest) returns (ExistsResponse);
+
+  rpc IsPrescriptionRequired (MedicineIdRequest) returns (PrescriptionResponse);
+
+  rpc GetMedicineInfo (MedicineIdRequest) returns (MedicineInfoResponse);
+
+  rpc AddMedicineToCatalogue (AddMedicineRequest) returns (AddMedicineResponse);
+
+  rpc RemoveMedicineFromCatalogue (MedicineIdRequest) returns (RemoveResponse);
+}
+
+
+message MedicineIdRequest {
+  string medicine_id = 1;
+  string trace_id = 2;
+}
+
+message ExistsResponse {
+  bool exists = 1;
+  string message = 2;
+}
+
+message PrescriptionResponse {
+  bool requires_prescription = 1;
+  string medicine_name = 2;
+}
+
+message MedicineInfoResponse {
+  bool exists = 1;
+  string id = 2;
+  string name = 3;
+  bool requires_prescription = 4;
+  string message = 5;
+}
+
+message AddMedicineRequest {
+  string id = 1;
+  string name = 2;
+  bool requires_prescription = 3;
+  string trace_id = 4;
+}
+
+message AddMedicineResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message RemoveResponse {
+  bool success = 1;
+  string message = 2;
+}
